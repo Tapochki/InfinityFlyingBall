@@ -9,12 +9,14 @@ namespace TandC.FlyBall
 
         private ILoadObjectsManager _loadObjectManager;
         private IUIManager _uiManager;
+        private IGameplayManager _gameplayManager;
 
         private Button _playButton;
 
         public void Init()
         {
             _loadObjectManager = GameClient.Get<ILoadObjectsManager>();
+            _gameplayManager = GameClient.Get<IGameplayManager>();
             _uiManager = GameClient.Get<IUIManager>();
 
             _selfObject = MonoBehaviour.Instantiate(_loadObjectManager.GetObjectByPath<GameObject>("Prefabs/UI/Pages/MainPage"), _uiManager.Canvas.transform);
@@ -46,6 +48,7 @@ namespace TandC.FlyBall
         #region Button Handlers
         private void PlayButtonOnClickHandler()
         {
+            _gameplayManager.StartGameplay();
         }
         #endregion
     }

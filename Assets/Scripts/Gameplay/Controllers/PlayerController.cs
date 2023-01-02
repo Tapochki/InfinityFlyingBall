@@ -5,6 +5,7 @@ namespace TandC.FlyBall
     public class PlayerController : IController
     {
         private ILoadObjectsManager _loadObjectsManager;
+        private IGameplayManager _gameplayManager;
 
         private Player _player;
 
@@ -16,19 +17,20 @@ namespace TandC.FlyBall
 
         public void Init()
         {
+            _gameplayManager = GameClient.Get<IGameplayManager>();
             _loadObjectsManager = GameClient.Get<ILoadObjectsManager>();
 
-            _followCamera = GameObject.Find("[CORE]/Camera_Gameplay").GetComponent<Camera>();
-
-            _player = new Player(_loadObjectsManager, GameObject.Find("[GAMEPLAY]").transform, 10);
-
-            CalculateCameraOffset();
+            _gameplayManager.GameplayStartedEvent += GameplayStartedEventHandler;
         }
 
         public void Update()
         {
-            _player.Update();
-            FollowCamera();
+            if (_player != null)
+            {
+                _player.Update();
+                FollowCamera();
+
+            }
         }
 
         public void FixedUpdate()
@@ -54,4 +56,13 @@ namespace TandC.FlyBall
         {
             _offset = _followCamera.transform.position - _player.GetPlayerPosition();
         }
+
+        private void GameplayStartedEventHandler()
+        {
+            _player = new Player(_loadObjectsManager, _gameplayManager.GameplayObject.transform, 10);
+            _followCamera = _gameplayManager.GameplayCamera;
+
+            CalculateCameraOffset();
+        }
     }
+}

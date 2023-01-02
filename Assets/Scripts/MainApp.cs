@@ -41,6 +41,7 @@ namespace TandC.FlyBall
             if (Instance == this)
             {
                 GameClient.Instance.InitServices();
+                GameClient.Get<IAppStateManager>().ChangeAppState(Common.Enumerators.AppState.APP_INIT_LOADING);
                 SceneManager.sceneLoaded += SceneManager_sceneLoaded;
             }
         }

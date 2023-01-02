@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TandC.FlyBall.Common;
 using UnityEngine;
 
 namespace TandC.FlyBall
@@ -39,12 +38,9 @@ namespace TandC.FlyBall
                 foreach (var item in _controllers)
                     item.Dispose();
             }
-
-            // _loadObjectsManager.BundlesDataLoadedEvent -= BundlesDataLoadedEventHandler;
-            // _loadObjectsManager.BundlesDataLoadFailedEvent -= BundlesDataLoadFailedEventHandler;
         }
 
-        private void OnDataManagerEndLoadCache() 
+        private void OnDataManagerEndLoadCache()
         {
 
         }
@@ -74,9 +70,9 @@ namespace TandC.FlyBall
                         item.Update();
                 }
             }
-            else 
+            else
             {
-                if (_isAfterPause) 
+                if (_isAfterPause)
                 {
                     _afterPauseTimer -= Time.unscaledDeltaTime;
                     if (_afterPauseTimer <= 0)
@@ -127,7 +123,7 @@ namespace TandC.FlyBall
             }
         }
 
-        public void PauseOff() 
+        public void PauseOff()
         {
             _isAfterPause = false;
             Time.timeScale = 1;
@@ -138,8 +134,8 @@ namespace TandC.FlyBall
         {
             if (IsGameplayStarted)
                 return;
-            GameplayObject = MonoBehaviour.Instantiate(_loadObjectsManager.GetObjectByPath<GameObject>("Prefabs/Gameplay/Gameplay"));
-            GameplayCamera = GameplayObject.transform.Find("GameplayCamera").GetComponent<Camera>();
+            GameplayObject = MonoBehaviour.Instantiate(_loadObjectsManager.GetObjectByPath<GameObject>("Prefabs/Gameplay/[GAMEPLAY]"));
+            GameplayCamera = GameplayObject.transform.Find("Camera_Gameplay").GetComponent<Camera>();
             MainApp.Instance.FixedUpdateEvent += FixedUpdate;
             IsGameplayStarted = true;
             _isAfterPause = false;
