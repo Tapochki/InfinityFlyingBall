@@ -10,7 +10,7 @@ namespace TandC.FlyBall
     public class DataManager : IService, IDataManager
     {
         private IAppStateManager _appStateManager;
-        private ILocalizationManager _localizationManager;
+        //private ILocalizationManager _localizationManager;
 
 
         public event Action EndLoadCache;
@@ -32,7 +32,7 @@ namespace TandC.FlyBall
         public void Init()
         {
             _appStateManager = GameClient.Get<IAppStateManager>();
-            _localizationManager = GameClient.Get<ILocalizationManager>();
+            //_localizationManager = GameClient.Get<ILocalizationManager>();
             FillCacheDataPathes();
         }
 
@@ -43,7 +43,7 @@ namespace TandC.FlyBall
             for (int i = 0; i < count; i++)
                 LoadCachedData((Enumerators.CacheDataType)i);
 
-            _localizationManager.ApplyLocalization();
+            //_localizationManager.ApplyLocalization();
 
             _appStateManager.ChangeAppState(Enumerators.AppState.MAIN_MENU);
 

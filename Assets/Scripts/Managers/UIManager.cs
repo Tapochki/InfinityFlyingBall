@@ -12,11 +12,10 @@ namespace TandC.FlyBall
         private List<IUIElement> _uiPages;
         private List<IUIPopup> _uiPopups;
 
-        public IUIElement CurrentPage { get; set; }
-        public IUIPopup CurrentPopup { get; set; }
-        public IUIElement PreviuosPage { get; set; }
-        public IUIPopup PreviuosPopup { get; set; }
-
+        public IUIElement CurrentPage { get; private set; }
+        public Stack<IUIElement> PreviousPages { get; private set; }
+        public IUIPopup CurrentPopup { get; private set; }
+        public Stack<IUIPopup> PreviousPopups { get; private set; }
         public CanvasScaler CanvasScaler { get; set; }
         public GameObject Canvas { get; set; }
 
@@ -33,13 +32,16 @@ namespace TandC.FlyBall
 
         public void Init()
         {
-            Canvas = GameObject.Find("CanvasUI");
-            UICamera = GameObject.Find("CameraUI").GetComponent<Camera>();
+            Canvas = GameObject.Find("Canvas");
+            UICamera = GameObject.Find("Camera_UI").GetComponent<Camera>();
             CanvasScaler = Canvas.GetComponent<CanvasScaler>();
+
+            PreviousPages = new Stack<IUIElement>();
+            PreviousPopups = new Stack<IUIPopup>();
 
             _uiPages = new List<IUIElement>()
             {
-                
+                new MainPage(),
             };
             foreach (var page in _uiPages)
                 page.Init();
@@ -49,7 +51,7 @@ namespace TandC.FlyBall
 
             };
 
-            GameClient.Get<ILocalizationManager>().ApplyLocalization();
+            //GameClient.Get<ILocalizationManager>().ApplyLocalization();
             foreach (var popup in _uiPopups)
                 popup.Init();
         }
@@ -96,35 +98,40 @@ namespace TandC.FlyBall
 
         public void SaveCurrentPage()
         {
-            if (CurrentPage != null)
-                PreviuosPage = CurrentPage;
+            if (CurrentPage == null) return;
+            if (PreviousPages == null) return;
+            if (PreviousPages.Contains(CurrentPage)) return;
+
+            PreviousPages.Push(CurrentPage);
         }
+
         public void LoadPreviousPage()
         {
-            if (CurrentPage != null)
-                CurrentPage.Hide();
-            if (PreviuosPage != null)
-                PreviuosPage.Show();
+            if (PreviousPages == null) return;
+            if (PreviousPages.Count == 0) return;
 
-            CurrentPage = PreviuosPage;
-
-            PreviuosPage = null;
+            CurrentPage.Hide();
+            CurrentPage = PreviousPages.Pop();
+            CurrentPage.Show();
         }
+
         public void SaveCurrentPopup()
         {
-            if (CurrentPopup != null)
-                PreviuosPopup = CurrentPopup;
+            if (CurrentPopup == null) return;
+            if (PreviousPopups == null) return;
+            if (PreviousPopups.Contains(CurrentPopup)) return;
+
+            PreviousPopups.Push(CurrentPopup);
         }
+
         public void LoadPreviousPopup()
         {
-            if (CurrentPopup != null)
-                CurrentPopup.Hide();
-            if (PreviuosPopup != null)
-                PreviuosPopup.Show();
+            if (PreviousPopups == null) return;
+            if (PreviousPopups.Count == 0) return;
 
-            CurrentPopup = PreviuosPopup;
-
-            PreviuosPopup = null;
+            CurrentPopup.Hide();
+            CurrentPopup = PreviousPopups.Pop();
+            CurrentPopup.Show();
         }
 
         public void DrawPopup<T>(object message = null, bool setMainPriority = false) where T : IUIPopup

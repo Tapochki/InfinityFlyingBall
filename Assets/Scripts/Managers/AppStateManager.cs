@@ -48,7 +48,7 @@ namespace TandC.FlyBall
                     break;
                 case Enumerators.AppState.MAIN_MENU:
                     {
-                        //_uiManager.SetPage<MainPage>();
+                        _uiManager.SetPage<MainPage>();
                     }
                     break;
                 default:

@@ -57,7 +57,7 @@ namespace TandC.FlyBall
             _dataManager.EndLoadCache += OnDataManagerEndLoadCache;
             _controllers = new List<IController>()
             {
-
+                new PlayerController(),
             };
 
             foreach (var item in _controllers)

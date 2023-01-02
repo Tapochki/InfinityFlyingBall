@@ -47,7 +47,6 @@
     <file>Assets/Plugins/Android/com.unity3d.mediation.unityads-adapter-1.1.0.aar</file>
     <file>Assets/Plugins/Android/com.unity3d.services.identifiers.unity-services-identifiers-1.0.0.aar</file>
     <file>Assets/Plugins/Android/org.jetbrains.annotations-13.0.jar</file>
-    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-1.5.21.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-common-1.5.21.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.kotlinx.kotlinx-coroutines-android-1.4.3.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm-1.4.3.jar</file>

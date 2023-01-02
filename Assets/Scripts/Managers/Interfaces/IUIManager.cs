@@ -11,10 +11,10 @@ namespace TandC.FlyBall
 
         Camera UICamera { get; set; }
 
-        IUIElement CurrentPage { get; set; }
-        IUIPopup CurrentPopup { get; set; }
-        IUIElement PreviuosPage { get; set; }
-        IUIPopup PreviuosPopup { get; set; }
+        IUIElement CurrentPage { get; }
+        Stack<IUIElement> PreviousPages { get; }
+        IUIPopup CurrentPopup { get; }
+        Stack<IUIPopup> PreviousPopups { get; }
         void SaveCurrentPage();
         void LoadPreviousPage();
         void SaveCurrentPopup();

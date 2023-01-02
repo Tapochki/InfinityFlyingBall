@@ -29,6 +29,8 @@ namespace TandC.FlyBall
 
         public GameClient()
         {
+            _services = new Dictionary<Type, IService>();
+
 #if UNITY_EDITOR
             IsDebugMode = true;
 #endif

@@ -42,7 +42,6 @@ namespace TandC.FlyBall
             {
                 GameClient.Instance.InitServices();
                 SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-
             }
         }
 
@@ -82,7 +81,6 @@ namespace TandC.FlyBall
                 GameClient.Instance.Dispose();
         }
 
-
         private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             if (Instance == this)
@@ -91,6 +89,5 @@ namespace TandC.FlyBall
                     OnLevelWasLoadedEvent(arg0.buildIndex);
             }
         }
-
     }
 }
