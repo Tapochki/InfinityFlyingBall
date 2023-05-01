@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.Advertisements;
 
-namespace TandC.FlyBall 
+namespace TandC.FlyBall
 {
-    public class AdvarismetnManager : IAdvarismetnManager, IService, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
+    public class AdvarismetnManager : IAdvarismetnManager, IService/*, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener*/
     {
         //private static AdvarismetnManager _Instance;
         //public static AdvarismetnManager Instance
@@ -38,20 +37,20 @@ namespace TandC.FlyBall
             _video = "Interstitial_iOS";
             _rewardedVideo = "Rewarded_iOS";
 #endif
-            Advertisement.Initialize(_gameId, _testMode, this);
+            //Advertisement.Initialize(_gameId, _testMode, this);
         }
 
         public void OnInitializationComplete()
         {
-                LoadAd();
-                LoadRewardVideo();
+            LoadAd();
+            LoadRewardVideo();
             Debug.Log("Initialize Ads Complete");
         }
 
-        public void OnInitializationFailed(UnityAdsInitializationError error, string message)
-        {
-            Debug.Log($"Error Ads Initialize: ({error} - {message})");
-        }
+        //public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+        //{
+        //    Debug.Log($"Error Ads Initialize: ({error} - {message})");
+        //}
 
         public void Update()
         {
@@ -65,91 +64,91 @@ namespace TandC.FlyBall
 
         public void LoadRewardVideo()
         {
-            Advertisement.Load(_rewardedVideo, this);
+            //Advertisement.Load(_rewardedVideo, this);
         }
 
-        public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
-        {
-            if (adUnitId.Equals(_rewardedVideo) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
-            {
-                Debug.Log("Unity Ads Rewarded Ad Completed");
-                // Grant a reward.
-                OnCompleteAds?.Invoke();
-                // Load another ad:
-            }
-            else
-            {
-                OnFailedAds?.Invoke();
-            }
+        //public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
+        //{
+        //    if (adUnitId.Equals(_rewardedVideo) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        //    {
+        //        Debug.Log("Unity Ads Rewarded Ad Completed");
+        //        // Grant a reward.
+        //        OnCompleteAds?.Invoke();
+        //        // Load another ad:
+        //    }
+        //    else
+        //    {
+        //        OnFailedAds?.Invoke();
+        //    }
 
-            if(adUnitId == _video) 
-            {
-                LoadAd();
-            }
-            if(adUnitId == _rewardedVideo) 
-            {
-                LoadRewardVideo();
-            }
-        }
+        //    if (adUnitId == _video)
+        //    {
+        //        LoadAd();
+        //    }
+        //    if (adUnitId == _rewardedVideo)
+        //    {
+        //        LoadRewardVideo();
+        //    }
+        //}
 
         public void LoadAd()
         {
             // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
             Debug.Log("Loading Ad: " + _video);
-            Advertisement.Load(_video, this);
+            //Advertisement.Load(_video, this);
         }
 
-        public void ShowAdsVideo(Action CompleteEvent, Action FailedEvent) 
+        public void ShowAdsVideo(Action CompleteEvent, Action FailedEvent)
         {
-            if (IsLoadRewardVideo) 
+            if (IsLoadRewardVideo)
             {
                 OnCompleteAds = CompleteEvent;
                 OnFailedAds = FailedEvent;
                 IsLoadRewardVideo = false;
-                Advertisement.Show(_rewardedVideo, this);
+                //Advertisement.Show(_rewardedVideo, this);
             }
         }
 
         // Show the loaded content in the Ad Unit:
         public void ShowAd()
         {
-            if (IsLoadVideo) 
+            if (IsLoadVideo)
             {
                 IsLoadVideo = false;
                 Debug.Log("Showing Ad: " + _video);
-                Advertisement.Show(_video, this);
+                //Advertisement.Show(_video, this);
             }
         }
 
         public void OnUnityAdsAdLoaded(string adUnitId)
         {
-            if (adUnitId == _rewardedVideo) 
+            if (adUnitId == _rewardedVideo)
             {
                 IsLoadRewardVideo = true;
             }
-            else 
+            else
             {
                 IsLoadVideo = true;
             }
 
         }
 
-        public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
+        //public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
+        //{
+        //    Debug.Log($"Error loading Ad Unit: {adUnitId} - {error.ToString()} - {message}");
+
+        //}
+
+        //public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
+        //{
+        //    Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        //}
+
+        public void OnUnityAdsShowStart(string adUnitId)
         {
-            Debug.Log($"Error loading Ad Unit: {adUnitId} - {error.ToString()} - {message}");
 
         }
-
-        public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
-        {
-            Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
-        }
-
-        public void OnUnityAdsShowStart(string adUnitId) 
-        {
-
-        }
-        public void OnUnityAdsShowClick(string adUnitId) 
+        public void OnUnityAdsShowClick(string adUnitId)
         {
 
         }
